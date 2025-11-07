@@ -4,7 +4,6 @@ Desarrollada con FastAPI, SQLModel y Pydantic
 Creado por Isabella Ramírez Franco (@isabellaramirez)
 """
 
-import logging
 import time
 from contextlib import asynccontextmanager
 
@@ -22,20 +21,13 @@ from musica_api.database import (
     obtener_estadisticas_db,
     verificar_conexion_db,
 )
+from musica_api.logging_config import get_logger, setup_logging
+from musica_api.middleware import LoggingMiddleware
 from musica_api.routers import canciones, favoritos, usuarios
 
-# Routers importados y listos para usar
-
-# Configuración de logging
-logging.basicConfig(
-    level=getattr(logging, settings.log_level),
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.StreamHandler(),
-        logging.FileHandler(f"{settings.app_name.lower()}.log"),
-    ],
-)
-logger = logging.getLogger(__name__)
+# Configurar sistema de logging
+setup_logging()
+logger = get_logger(__name__)
 
 # Variable global para tiempo de inicio
 start_time = time.time()
@@ -82,6 +74,9 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
+# Configurar middleware de logging
+app.add_middleware(LoggingMiddleware, log_requests=True, log_responses=True)
+
 # Configurar CORS con configuraciones del archivo .env
 app.add_middleware(
     CORSMiddleware,
@@ -90,31 +85,6 @@ app.add_middleware(
     allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH"],
     allow_headers=["*"],
 )
-
-
-# Middleware para logging de requests
-@app.middleware("http")
-async def log_requests(request, call_next):
-    """Middleware para registrar todas las peticiones HTTP"""
-    start_time = time.time()
-
-    # Procesar la request
-    response = await call_next(request)
-
-    # Calcular tiempo de procesamiento
-    process_time = time.time() - start_time
-
-    # Log de la request
-    logger.info(
-        f"{request.method} {request.url} - "
-        f"Status: {response.status_code} - "
-        f"Time: {process_time:.4f}s"
-    )
-
-    # Agregar header con tiempo de procesamiento
-    response.headers["X-Process-Time"] = str(process_time)
-
-    return response
 
 
 # Montar archivos estáticos para el frontend

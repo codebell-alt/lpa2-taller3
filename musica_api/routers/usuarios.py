@@ -7,6 +7,8 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlmodel import Session, func, select
 
 from musica_api.database import get_session
+from musica_api.logging_config import get_logger
+from musica_api.middleware import log_endpoint_access, log_validation_error
 from musica_api.models import (
     MensajeRespuesta,
     Usuario,
@@ -15,6 +17,9 @@ from musica_api.models import (
     UsuarioUpdate,
 )
 from musica_api.pagination import PaginatedResponse, PaginationParams
+
+# Logger específico para usuarios
+logger = get_logger(__name__)
 
 # Crear el router con prefijo y etiquetas
 router = APIRouter(
@@ -69,24 +74,42 @@ def crear_usuario(usuario: UsuarioCreate, session: Session = Depends(get_session
     - **nombre**: Nombre completo del usuario
     - **correo**: Correo electrónico único
     """
+    # Log del intento de creación
+    log_endpoint_access("usuarios", "POST")
+    logger.info(f"Intento de crear usuario con correo: {usuario.correo}")
+
     # Verificar si el correo ya existe
     existing_user = session.exec(
         select(Usuario).where(Usuario.correo == usuario.correo)
     ).first()
 
     if existing_user:
+        log_validation_error("correo", usuario.correo, "Correo ya existe")
+        logger.warning(f"Intento de crear usuario duplicado: {usuario.correo}")
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Ya existe un usuario con el correo: {usuario.correo}",
         )
 
-    # Crear el nuevo usuario
-    db_usuario = Usuario.model_validate(usuario)
-    session.add(db_usuario)
-    session.commit()
-    session.refresh(db_usuario)
+    try:
+        # Crear el nuevo usuario
+        db_usuario = Usuario.model_validate(usuario)
+        session.add(db_usuario)
+        session.commit()
+        session.refresh(db_usuario)
 
-    return db_usuario
+        logger.info(
+            f"Usuario creado exitosamente - ID: {db_usuario.id}, Correo: {db_usuario.correo}"
+        )
+        return db_usuario
+
+    except Exception as e:
+        logger.error(f"Error al crear usuario: {str(e)}")
+        session.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Error interno al crear usuario",
+        )
 
 
 @router.get("/{usuario_id}", response_model=UsuarioRead)
