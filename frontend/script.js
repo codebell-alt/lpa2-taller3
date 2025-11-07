@@ -248,7 +248,7 @@ function renderUsers(userList) {
     `).join('');
 }
 
-// Buscar usuario por email
+// Buscar usuario por email (filtrado del lado cliente por ahora)
 async function searchUserByEmail() {
     const email = document.getElementById('search-email').value.trim();
 
@@ -258,16 +258,30 @@ async function searchUserByEmail() {
     }
 
     try {
-        const response = await fetch(`${API_BASE_URL}/api/usuarios/buscar?correo=${encodeURIComponent(email)}`);
+        // Obtener todos los usuarios y filtrar del lado cliente
+        const response = await fetch(`${API_BASE_URL}/api/usuarios/`);
         const data = await response.json();
 
         if (response.ok) {
-            renderUsers(data);
+            // Filtrar usuarios por email
+            const usuarios = data.items || data;
+            const usuariosEncontrados = usuarios.filter(usuario =>
+                usuario.correo.toLowerCase().includes(email.toLowerCase())
+            );
+
+            if (usuariosEncontrados.length > 0) {
+                renderUsers(usuariosEncontrados);
+                showToast(`Se encontraron ${usuariosEncontrados.length} usuario(s)`, 'success');
+            } else {
+                renderUsers([]);
+                showToast('No se encontraron usuarios con ese email', 'warning');
+            }
         } else {
-            throw new Error(data.detail || 'Error en la búsqueda');
+            throw new Error('Error al buscar usuarios');
         }
     } catch (error) {
         showToast(`Error en la búsqueda: ${error.message}`, 'error');
+        console.error('Error al buscar usuarios:', error);
     }
 }
 
@@ -311,7 +325,7 @@ async function createUser(event) {
     };
 
     try {
-        const response = await fetch(`${API_BASE_URL}/api/usuarios`, {
+        const response = await fetch(`${API_BASE_URL}/api/usuarios/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -447,7 +461,7 @@ async function loadSongs() {
 // Cargar géneros para el select
 async function loadGenres() {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/canciones/generos`);
+        const response = await fetch(`${API_BASE_URL}/api/canciones/generos/lista`);
         const data = await response.json();
 
         if (response.ok) {
@@ -526,16 +540,47 @@ async function searchSongs() {
     if (genero) params.append('genero', genero);
 
     try {
-        const response = await fetch(`${API_BASE_URL}/api/canciones/buscar?${params}`);
+        // Obtener todas las canciones y filtrar del lado cliente
+        const response = await fetch(`${API_BASE_URL}/api/canciones/`);
         const data = await response.json();
 
         if (response.ok) {
-            renderSongs(data);
+            let canciones = data.items || data;
+
+            // Aplicar filtros
+            if (titulo) {
+                canciones = canciones.filter(cancion =>
+                    cancion.titulo.toLowerCase().includes(titulo.toLowerCase())
+                );
+            }
+            if (artista) {
+                canciones = canciones.filter(cancion =>
+                    cancion.artista.toLowerCase().includes(artista.toLowerCase())
+                );
+            }
+            if (album) {
+                canciones = canciones.filter(cancion =>
+                    cancion.album.toLowerCase().includes(album.toLowerCase())
+                );
+            }
+            if (genero) {
+                canciones = canciones.filter(cancion =>
+                    cancion.genero.toLowerCase().includes(genero.toLowerCase())
+                );
+            }
+
+            renderSongs(canciones);
+            if (canciones.length === 0) {
+                showToast('No se encontraron canciones con esos filtros', 'warning');
+            } else {
+                showToast(`Se encontraron ${canciones.length} canción(es)`, 'success');
+            }
         } else {
-            throw new Error(data.detail || 'Error en la búsqueda');
+            throw new Error('Error al buscar canciones');
         }
     } catch (error) {
         showToast(`Error en la búsqueda: ${error.message}`, 'error');
+        console.error('Error al buscar canciones:', error);
     }
 }
 
