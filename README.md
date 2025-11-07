@@ -1,8 +1,6 @@
-# API de Música - Proyecto Completo
+# API de Música - Taller 3 LPA2
 
-**Desarrolladora:** Isabella Ramírez Franco (@codebell-alt)
-
-Una [API RESTful](https://aws.amazon.com/es/what-is/restful-api/) completa para gestionar usuarios, canciones y favoritos. Desarrollada con [FastAPI](https://fastapi.tiangolo.com/), [SQLModel](https://sqlmodel.tiangolo.com/), frontend interactivo con TailwindCSS y herramientas de desarrollo profesionales.
+API RESTful para gestionar usuarios, canciones y favoritos. Desarrollada con FastAPI, SQLModel, frontend con TailwindCSS y herramientas de desarrollo profesionales.
 
 ## Características Implementadas
 
@@ -27,16 +25,16 @@ Una [API RESTful](https://aws.amazon.com/es/what-is/restful-api/) completa para 
 - **Pre-commit hooks**: Calidad automática de código
 - **CI/CD ready**: Preparado para integración continua
 
-## 🚀 Mejoras Implementadas
+## Mejoras Implementadas
 
-### 1. Sistema de Paginación Completo ✅
+### 1. Sistema de Paginación Completo
 - **Paginación genérica**: Implementada para todos los endpoints (usuarios, canciones, favoritos)
 - **Modelos reutilizables**: `PaginationParams` y `PaginatedResponse[T]` con TypeVars
 - **Metadatos completos**: Total de elementos, páginas, navegación next/prev
 - **Parámetros intuitivos**: `page` y `size` en lugar de `skip` y `limit`
 - **Compatibilidad frontend**: Frontend actualizado para manejar respuestas paginadas
 
-### 2. Sistema de Logging Avanzado ✅
+### 2. Sistema de Logging Avanzado
 - **Middleware automático**: Logging transparente de todas las peticiones HTTP
 - **IDs únicos**: Cada request tiene un ID para trazabilidad completa
 - **Métricas detalladas**: Tiempo de procesamiento, códigos de estado, IP de cliente
@@ -45,12 +43,7 @@ Una [API RESTful](https://aws.amazon.com/es/what-is/restful-api/) completa para 
 - **Logging de negocio**: Registro de operaciones críticas (creación usuarios, errores de validación)
 - **Colores en consola**: Output con códigos ANSI para mejor legibilidad
 
-El proyecto incluye una interfaz de documentación interactiva generada automáticamente con [Swagger](https://swagger.io/) disponible en el *endpoint* `/docs`.
-
-## Autor
-**Estudiante:** Isabella Ramírez Franco
-**Usuario GitHub:** @codebell-alt
-**Email:** isabella315784@gmail.com
+El proyecto incluye una interfaz de documentación interactiva generada automáticamente con Swagger disponible en el endpoint `/docs`.
 
 ## Estructura del Proyecto
 
@@ -118,7 +111,7 @@ lpa2-taller3
 
 4. Ajusta las variables de entorno, editando el archivo `.env`
 
-## 🚀 Cómo Ejecutar el Proyecto
+## Ejecución del Proyecto
 
 ### Opción 1: Usando Python directamente
 1. Ejecuta la aplicación:
@@ -132,30 +125,15 @@ lpa2-taller3
    uvicorn main:app --host 127.0.0.1 --port 8001 --reload
    ```
 
-### 📱 Acceder al Proyecto
+### Acceso al Proyecto
 
-Una vez ejecutado el servidor, podrás acceder a:
+Una vez ejecutado el servidor:
 
-- **🏠 Frontend Web**: [http://127.0.0.1:8001/](http://127.0.0.1:8001/)
-  - Interfaz completa con TailwindCSS
-  - Gestión de usuarios, canciones y favoritos
-  - Dashboard de estadísticas en tiempo real
-
-- **📚 Documentación Swagger UI**: [http://127.0.0.1:8001/docs](http://127.0.0.1:8001/docs)
-  - Documentación interactiva de la API
-  - Prueba endpoints directamente desde el navegador
-
-- **📖 Documentación ReDoc**: [http://127.0.0.1:8001/redoc](http://127.0.0.1:8001/redoc)
-  - Documentación alternativa más detallada
-
-- **⚡ API REST**: [http://127.0.0.1:8001/api/](http://127.0.0.1:8001/api/)
-  - Endpoints para integración con otras aplicaciones
-
-- **📊 Estadísticas**: [http://127.0.0.1:8001/stats](http://127.0.0.1:8001/stats)
-  - Métricas de la base de datos
-
-- **💚 Health Check**: [http://127.0.0.1:8001/health](http://127.0.0.1:8001/health)
-  - Estado de la aplicación y conectividad
+- **Frontend Web**: [http://127.0.0.1:8001/](http://127.0.0.1:8001/)
+- **Documentación Swagger UI**: [http://127.0.0.1:8001/docs](http://127.0.0.1:8001/docs)
+- **Documentación ReDoc**: [http://127.0.0.1:8001/redoc](http://127.0.0.1:8001/redoc)
+- **API REST**: [http://127.0.0.1:8001/api/](http://127.0.0.1:8001/api/)
+- **Health Check**: [http://127.0.0.1:8001/health](http://127.0.0.1:8001/health)
 
 ## Uso de la API
 
@@ -188,7 +166,7 @@ Una vez ejecutado el servidor, podrás acceder a:
 - **Favoritos por usuario**: `GET /api/favoritos/usuario/{usuario_id}`
 - **Estadísticas**: `GET /api/favoritos/estadisticas/resumen`
 
-## 🔧 Funciones Utilitarias Implementadas
+## Funciones Utilitarias Implementadas
 
 ### Validaciones y Formateo
 - **Validación de email**: Regex completo para verificar formato de correos
@@ -197,30 +175,24 @@ Una vez ejecutado el servidor, podrás acceder a:
 - **Obtención de año actual**: Función para fechas dinámicas
 - **Validación de URL de BD**: Verificación de conexiones de base de datos
 
-## ✅ Desarrollo del Taller - COMPLETADO
+## Desarrollo del Taller - COMPLETADO
 
-1. **README.md actualizado** ✅ - Documentación completa con datos de Isabella Ramírez Franco
-
-2. **DBeaver** ⏳ - (Opcional) Agregar 5 usuarios y 10 canciones directo a las tablas
-
-3. **Pre-commit y GitHub Actions** ✅ - Configurado ruff linter/formatter y pytest con workflows automáticos
-
-4. **TODOs y FIXMEs resueltos** ✅ - Todos los comentarios implementados con commits individuales:
+1. **README.md actualizado** - Documentación completa del proyecto
+2. **DBeaver** - (Opcional) Agregar 5 usuarios y 10 canciones directo a las tablas
+3. **Pre-commit y GitHub Actions** - Configurado ruff linter/formatter y pytest con workflows automáticos
+4. **TODOs y FIXMEs resueltos** - Todos los comentarios implementados con commits individuales:
    - Validación de correo electrónico con regex
    - Formateo de duración en formato MM:SS
    - Generación de slug para URLs amigables
    - Función para obtener año actual
    - Validación personalizada para database_url
-
-5. **Pruebas de API** ✅ - Funcionamiento verificado en Swagger UI y ReDoc
-
-6. **Pruebas automatizadas** ✅ - 18 tests implementados con pytest (88% de éxito)
-
-7. **Dos mejoras implementadas** ✅:
+5. **Pruebas de API** - Funcionamiento verificado en Swagger UI y ReDoc
+6. **Pruebas automatizadas** - 18 tests implementados con pytest (88% de éxito)
+7. **Dos mejoras implementadas**:
    - **Sistema de Paginación**: Paginación completa para todos los endpoints
    - **Sistema de Logging**: Sistema avanzado de registro y monitoreo
 
-## 🧪 Ejecutar Pruebas
+## Ejecutar Pruebas
 
 ```bash
 # Ejecutar todas las pruebas
@@ -233,7 +205,7 @@ pytest --cov=musica_api
 pytest tests/test_api.py::test_crear_usuario -v
 ```
 
-## 🔧 Herramientas de Desarrollo
+## Herramientas de Desarrollo
 
 ```bash
 # Ejecutar linter y formatter
@@ -247,13 +219,13 @@ pre-commit run --all-files
 tail -f logs/musica_api.log
 ```
 
-## 💡 Sugerencias de Mejora
+## Sugerencias de Mejora
 
-### ✅ Implementadas
-2. **Paginación** ✅ - Sistema completo de paginación implementado para todos los endpoints
-5. **Registro (logging)** ✅ - Sistema avanzado de logging con middleware y métricas
+### Implementadas
+2. **Paginación** - Sistema completo de paginación implementado para todos los endpoints
+5. **Registro (logging)** - Sistema avanzado de logging con middleware y métricas
 
-### 🔄 Pendientes (Opcionales)
+### Pendientes (Opcionales)
 1. **Autenticación y autorización**: Implementar JWT o OAuth2 para proteger los endpoints
 3. **Base de datos en producción**: Migrar a PostgreSQL o MySQL para entornos de producción
 4. **Docker**: Contenerizar la aplicación para facilitar su despliegue
@@ -261,25 +233,13 @@ tail -f logs/musica_api.log
 7. **Estadísticas de uso**: Sistema de seguimiento y recomendaciones
 8. **Subida de archivos**: Gestión de archivos de audio con S3
 
-## 🏆 Logros del Proyecto
+## Logros del Proyecto
 
-- ✅ **API REST completa** con FastAPI y SQLModel
-- ✅ **Frontend responsivo** con TailwindCSS
-- ✅ **Sistema de paginación** genérico y reutilizable
-- ✅ **Logging avanzado** con métricas y trazabilidad
-- ✅ **Calidad de código** con ruff, pre-commit y pytest
-- ✅ **Documentación completa** con Swagger UI y ReDoc
-- ✅ **CI/CD ready** con GitHub Actions
-- ✅ **Validaciones robustas** con Pydantic
-- ✅ **Funciones utilitarias** implementadas y probadas
-
-## 👩‍💻 Desarrolladora
-
-**Isabella Ramírez Franco**
-- GitHub: [@codebell-alt](https://github.com/codebell-alt)
-- Email: isabella315784@gmail.com
-- Proyecto: API de Música - Taller 3 LPA2
-
----
-
-*Proyecto desarrollado como parte del curso de Lenguajes de Programación Avanzados 2*
+- **API REST completa** con FastAPI y SQLModel
+- **Frontend responsivo** con TailwindCSS
+- **Sistema de paginación** genérico y reutilizable
+- **Logging avanzado** con métricas y trazabilidad
+- **Calidad de código** con ruff, pre-commit y pytest
+- **Documentación completa** con Swagger UI y ReDoc
+- **Validaciones robustas** con Pydantic
+- **Funciones utilitarias** implementadas y probadas
