@@ -1,15 +1,38 @@
-# API de Música
+# API de Música - Proyecto Completo
 
-Una [API RESTful](https://aws.amazon.com/es/what-is/restful-api/) para gestionar usuarios, canciones y favoritos. Desarrollada con [FastAPI](https://fastapi.tiangolo.com/), [SQLModel](https://sqlmodel.tiangolo.com/) y [Pydantic](https://docs.pydantic.dev/).
+**Desarrolladora:** Isabella Ramírez Franco (@codebell-alt)
 
-## Descripción
+Una [API RESTful](https://aws.amazon.com/es/what-is/restful-api/) completa para gestionar usuarios, canciones y favoritos. Desarrollada con [FastAPI](https://fastapi.tiangolo.com/), [SQLModel](https://sqlmodel.tiangolo.com/), frontend interactivo con TailwindCSS y herramientas de desarrollo profesionales.
 
-Esta API permite administrar:
-- **Usuarios**: crear y gestionar perfiles de usuarios.
-- **Canciones**: agregar, actualizar y eliminar canciones con sus metadatos.
-- **Favoritos**: gestionar las canciones favoritas de cada usuario.
+## Características Implementadas
+
+### API Backend (FastAPI)
+- **Usuarios**: CRUD completo con validación de email
+- **Canciones**: Gestión de música con búsqueda avanzada
+- **Favoritos**: Sistema de relaciones usuario-canción
+- **Validaciones**: Pydantic para datos robustos
+- **Base de datos**: SQLModel + SQLite
+- **Documentación**: OpenAPI automática en `/docs`
+
+### Frontend Interactivo
+- **Interfaz moderna**: TailwindCSS responsive
+- **Gestión completa**: CRUD para todas las entidades
+- **Búsqueda en vivo**: Filtrado dinámico de canciones
+- **Estadísticas**: Dashboard con métricas en tiempo real
+- **Animaciones**: Transiciones suaves CSS3
+
+### Testing y Calidad
+- **18 pruebas unitarias** con pytest (88% éxito)
+- **Ruff**: Linter y formateador moderno
+- **Pre-commit hooks**: Calidad automática de código
+- **CI/CD ready**: Preparado para integración continua
 
 El proyecto incluye una interfaz de documentación interactiva generada automáticamente con [Swagger](https://swagger.io/) disponible en el *endpoint* `/docs`.
+
+## Autor
+**Estudiante:** Isabella Ramírez Franco
+**Usuario GitHub:** @codebell-alt
+**Email:** isabella315784@gmail.com
 
 ## Estructura del Proyecto
 
@@ -82,13 +105,13 @@ lpa2-taller3
 1. Ejecuta la aplicación:
 
    ```bash
-   uvicorn main:app --reload
+  uvicorn main:app --reload
    ```
 
 2. Accede a la aplicación:
-   - API: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
-   - Documentación *Swagger UI*: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-   - Documentación *ReDoc*: [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
+   - API: [http://127.0.0.1:8001/](http://127.0.0.1:8001/)
+   - Documentación *Swagger UI*: [http://127.0.0.1:8001/docs](http://127.0.0.1:8001/docs)
+   - Documentación *ReDoc*: [http://127.0.0.1:8001/redoc](http://127.0.0.1:8001/redoc)
 
 ## Uso de la API
 
@@ -152,4 +175,3 @@ lpa2-taller3
 7. **Estadísticas de uso**: Implementar un sistema de seguimiento para analizar qué canciones son más populares y sugerir recomendaciones basadas en preferencias similares.
 
 8. **Subida de archivos**: Permitir la subida de archivos de audio y gestionar su almacenamiento en un servicio como S3 o similar.
-
