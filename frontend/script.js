@@ -174,11 +174,12 @@ function formatDuration(seconds) {
 // Cargar todos los usuarios
 async function loadUsers() {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/usuarios`);
+        const response = await fetch(`${API_BASE_URL}/api/usuarios/`);
         const data = await response.json();
 
         if (response.ok) {
-            users = data;
+            // Ahora la API devuelve un objeto paginado con la propiedad 'items'
+            users = data.items || data; // Soporte para ambos formatos
             renderUsers(users);
         } else {
             throw new Error(data.detail || 'Error al cargar usuarios');
@@ -428,11 +429,12 @@ async function deleteUser(userId, userName) {
 // Cargar todas las canciones
 async function loadSongs() {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/canciones`);
+        const response = await fetch(`${API_BASE_URL}/api/canciones/`);
         const data = await response.json();
 
         if (response.ok) {
-            songs = data;
+            // Ahora la API devuelve un objeto paginado con la propiedad 'items'
+            songs = data.items || data; // Soporte para ambos formatos
             renderSongs(songs);
         } else {
             throw new Error(data.detail || 'Error al cargar canciones');
@@ -754,11 +756,12 @@ async function deleteSong(songId, songTitle) {
 // Cargar todos los favoritos
 async function loadFavorites() {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/favoritos`);
+        const response = await fetch(`${API_BASE_URL}/api/favoritos/`);
         const data = await response.json();
 
         if (response.ok) {
-            favorites = data;
+            // Ahora la API devuelve un objeto paginado con la propiedad 'items'
+            favorites = data.items || data; // Soporte para ambos formatos
             renderFavorites(favorites);
         } else {
             throw new Error(data.detail || 'Error al cargar favoritos');
@@ -771,13 +774,14 @@ async function loadFavorites() {
 // Cargar usuarios para el selector
 async function loadUsersForSelect() {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/usuarios`);
+        const response = await fetch(`${API_BASE_URL}/api/usuarios/`);
         const data = await response.json();
 
         if (response.ok) {
+            const userList = data.items || data; // Soporte para formato paginado
             const select = document.getElementById('filter-usuario');
             select.innerHTML = '<option value="">Todos los usuarios</option>' +
-                data.map(user => `<option value="${user.id}">${user.nombre} (${user.correo})</option>`).join('');
+                userList.map(user => `<option value="${user.id}">${user.nombre} (${user.correo})</option>`).join('');
         }
     } catch (error) {
         console.error('Error al cargar usuarios:', error);
